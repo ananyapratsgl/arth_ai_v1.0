@@ -1,5 +1,7 @@
 # ARTH — AI Report Translator for Health
 
+![ARTH AI project overview](images/Arth1.png)
+
 **Version:** 1.0.0  
 **Project type:** Student-built AI web application  
 **Status:** v1.0 baseline; future enhancements are planned for v2.0.
