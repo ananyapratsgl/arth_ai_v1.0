@@ -1,1 +1,29 @@
+# Local runtime files
 .arth-run/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+
+# Node.js
+node_modules/
+.next/
+out/
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Local uploads and patient data
+uploads/
+data/
+*.pdf
