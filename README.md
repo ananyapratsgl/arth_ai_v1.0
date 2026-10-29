@@ -10,12 +10,12 @@ ARTH helps people understand the wording and values in medical reports through c
 
 > **Medical safety:** ARTH is an educational support prototype, not a doctor or a medical device. It does not replace a qualified healthcare professional, diagnose a disease, or prescribe treatment. AI output can be incomplete or incorrect. Discuss results and health decisions with a qualified clinician.
 
-## Quick start on Ananya's MacBook
+## Quick start on macOS
 
-After the one-time setup below has been completed, daily startup is designed to be simple. Open Terminal and run:
+After the one-time setup below has been completed, daily startup is designed to be simple. Replace `/path/to/arth_ai_v1.0` with the directory where you cloned the repository. Open Terminal and run:
 
 ```bash
-cd ~/Documents/Projects/arth_ai_v1.0
+cd /path/to/arth_ai_v1.0
 ./scripts/arth.sh start
 ```
 
@@ -101,12 +101,12 @@ You need Git, a compatible Python 3 installation, Node.js/npm, and access to the
 
 ## 4. One-time setup on macOS
 
-Run these commands from the project root.
+Run these commands from the project root. An automated setup script would improve the first-run experience by checking prerequisites, installing backend and frontend dependencies, and preparing a local environment file from `.env.example` without embedding or printing secrets. Until such a script is included and tested, use the manual steps below.
 
 ### Backend environment
 
 ```bash
-cd ~/Documents/Projects/arth_ai_v1.0/arth-backend
+cd /path/to/arth_ai_v1.0/arth-backend
 python3 -m venv .venv
 ./.venv/bin/python -m pip install --upgrade pip
 ./.venv/bin/python -m pip install -r requirements.txt
@@ -118,12 +118,12 @@ If `.venv` already exists and backend tests pass, do not recreate it just for da
 
 Ensure `arth-backend/.env` exists and contains the **variable names and provider values expected by the current backend code**. The example file contains placeholders, not working credentials. Check `arth-backend/app/routes.py` and `.env.example` to confirm the exact provider configuration before changing it.
 
-Never paste real API keys into README files, source code, chat messages, screenshots, or Git commits. Do not print `.env` values into Terminal output. Each teammate should use their own authorized key in a local `.env`.
+Never paste real API keys into README files, source code, chat messages, screenshots, or Git commits. Do not print `.env` values into Terminal output. Each user should configure their own authorized API key in a local `.env` file.
 
 ### Frontend dependencies
 
 ```bash
-cd ~/Documents/Projects/arth_ai_v1.0/arth-frontend
+cd /path/to/arth_ai_v1.0/arth-frontend
 npm ci
 ```
 
@@ -134,7 +134,7 @@ Use `npm ci` when a `package-lock.json` exists and you want dependencies install
 The `scripts/arth.sh` file should be present and executable. If needed:
 
 ```bash
-cd ~/Documents/Projects/arth_ai_v1.0
+cd /path/to/arth_ai_v1.0
 chmod +x scripts/arth.sh
 ```
 
@@ -193,14 +193,14 @@ If the helper script is unavailable, use two Terminal tabs/windows.
 **Backend:**
 
 ```bash
-cd ~/Documents/Projects/arth_ai_v1.0/arth-backend
+cd /path/to/arth_ai_v1.0/arth-backend
 ./.venv/bin/python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 **Frontend:**
 
 ```bash
-cd ~/Documents/Projects/arth_ai_v1.0/arth-frontend
+cd /path/to/arth_ai_v1.0/arth-frontend
 npm run dev -- --hostname 127.0.0.1
 ```
 
@@ -220,7 +220,7 @@ Leave both commands running while using the app. Press `Control+C` in each termi
 Backend tests:
 
 ```bash
-cd ~/Documents/Projects/arth_ai_v1.0/arth-backend
+cd /path/to/arth_ai_v1.0/arth-backend
 ./.venv/bin/python -m pytest -q
 ```
 
@@ -239,7 +239,7 @@ cd ~/Documents/Projects/arth_ai_v1.0/arth-backend
 **Report upload or analysis fails intermittently:** the configured AI provider may be temporarily busy, rate-limited, or timing out. Wait a few seconds and try the upload again. Avoid repeatedly clicking Upload in quick succession. If it keeps failing, refresh the page, check that the backend health endpoint responds, and inspect the backend log for the actual error:
 
 ```bash
-tail -50 ~/Documents/Projects/arth_ai_v1.0/.arth-run/backend.log
+tail -50 /path/to/arth_ai_v1.0/.arth-run/backend.log
 ```
 
 A repeated failure may require checking the configured provider's service status, usage limits, API key, model, and endpoint. Do not share API keys or unredacted logs. The retry advice is a troubleshooting step; it does not guarantee that a provider-side outage or quota issue will resolve immediately.
@@ -258,7 +258,7 @@ A repeated failure may require checking the configured provider's service status
 
 ## 10. Versioning and roadmap
 
-### v1.0.0 — Initial team baseline
+### v1.0.0 — Initial project baseline
 
 The `v1.0` tag identifies the first shared project baseline. It does not mean the application is clinically validated or production-ready.
 
@@ -294,5 +294,5 @@ git push -u origin feature/short-description
 
 ---
 
-**ARTH v1.0.0 — Built as a student learning project.**  
+**ARTH v1.0.0 — An educational AI project.**
 Treat every AI-generated explanation as something to verify, not as a medical conclusion.
