@@ -30,7 +30,7 @@ MAX_PDF_PAGES = 100
 MAX_EXTRACTED_CHARACTERS = 50_000
 MAX_REPORT_CHARACTERS = 50_000
 
-MODEL = os.getenv("OPENROUTER_MODEL", "openai/gpt-4o-mini")
+MODEL = os.getenv("NVIDIA_MODEL", "nvidia/nemotron-3-super-120b-a12b")
 
 ALLOWED_FILE_TYPES = {
     "application/pdf",
@@ -62,24 +62,24 @@ def get_language_instruction(language_code: str) -> str:
 
 @lru_cache(maxsize=1)
 def get_ai_client():
-    """Create the OpenRouter client once and reuse it."""
-    api_key = os.getenv("NEBIUS_API_KEY", "").strip()
+    """Create and reuse the NVIDIA NIM OpenAI-compatible client."""
+    api_key = os.getenv("NVIDIA_API_KEY", "").strip()
     base_url = os.getenv(
-        "NEBIUS_BASE_URL",
-        "https://openrouter.ai/api/v1",
+        "NVIDIA_BASE_URL",
+        "https://integrate.api.nvidia.com/v1",
     ).strip()
 
-    if api_key and "openrouter.ai" in base_url:
-        return OpenAI(
-            api_key=api_key,
-            base_url=base_url,
-            timeout=60.0,
-            max_retries=0,
+    if not api_key or not base_url.startswith("https://"):
+        raise HTTPException(
+            status_code=503,
+            detail="NVIDIA AI provider is not configured.",
         )
 
-    raise HTTPException(
-        status_code=503,
-        detail="OpenRouter is not configured. Check the backend environment.",
+    return OpenAI(
+        api_key=api_key,
+        base_url=base_url,
+        timeout=60.0,
+        max_retries=0,
     )
 
 

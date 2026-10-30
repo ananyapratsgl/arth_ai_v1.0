@@ -487,6 +487,9 @@ export default function AnalyzePage() {
                       return;
                     }
                     const utterance = new SpeechSynthesisUtterance(part);
+
+
+
                     const targetLanguage = voiceLanguages[language] || "en-IN";
                     const availableVoices = window.speechSynthesis.getVoices();
 
@@ -525,7 +528,21 @@ export default function AnalyzePage() {
                     window.speechSynthesis.speak(utterance);
                   };
 
-                  speakNext();
+                  const synth = window.speechSynthesis;
+                  let started = false;
+                  const startPlayback = () => {
+                    if (started) return;
+                    const voices = synth.getVoices();
+                    if (!voices.length) return;
+                    started = true;
+                    synth.removeEventListener("voiceschanged", startPlayback);
+                    speakNext();
+                  };
+                  startPlayback();
+                  if (!started) {
+                    synth.addEventListener("voiceschanged", startPlayback);
+                    window.setTimeout(startPlayback, 2000);
+                  }
                 }} style={{ padding: "8px 12px", borderRadius: 9, border: "1px solid #ddd2f2", background: "#fff", color: "#6845a6", cursor: "pointer" }}>
                   🔊 Read full summary
                 </button>

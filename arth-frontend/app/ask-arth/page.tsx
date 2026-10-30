@@ -71,6 +71,19 @@ export default function AskArth() {
       es: "es-ES", fr: "fr-FR", ru: "ru-RU",
     };
     const utterance = new SpeechSynthesisUtterance(text);
+
+    const arthVoices = window.speechSynthesis.getVoices();
+    const preferredVoice =
+      arthVoices.find(v => /^en-IN$/i.test(v.lang) && /female|heera|priya/i.test(v.name)) ||
+      arthVoices.find(v => /^en-IN$/i.test(v.lang)) ||
+      arthVoices.find(v => /^en-GB$/i.test(v.lang)) ||
+      arthVoices.find(v => /^en-US$/i.test(v.lang));
+
+    if (preferredVoice) utterance.voice = preferredVoice;
+    utterance.rate = 0.92;
+    utterance.pitch = 1.04;
+    utterance.volume = 1;
+
     utterance.lang = voiceLanguage[language] || "en-IN";
     window.speechSynthesis.speak(utterance);
   }
